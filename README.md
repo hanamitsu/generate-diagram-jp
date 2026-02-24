@@ -8,15 +8,25 @@
 
 ## 生成例
 
-| 入力テーマ | スタイル | 出力イメージ |
-|-----------|---------|-------------|
-| AIエージェントパイプラインの説明 | balanced | グラレコ風の手描きタッチ、カラフルなソフトトーンのボックス |
-| ヘルスケアAI戦略の比較 | balanced | 左右対称の比較図、リボンバナーとマーカーハイライト |
-| 3Dキャラクター生成パイプライン | balanced | 左→右パイプライン、フェーズグルーピング |
+テキストを入力するだけで、内容に応じた図種（パイプライン、比較図、アーキテクチャ図など）を自動判定し図解を生成:
+
+**AIエージェントパイプライン**（balanced モード）
+
+<img src="docs/images/example_pipeline.png" width="600" alt="AIエージェントパイプラインの図解例">
+
+**ヘルスケアAI戦略比較**（balanced モード）
+
+<img src="docs/images/example_comparison.png" width="600" alt="ヘルスケアAI戦略比較の図解例">
+
+**プラットフォームアーキテクチャ**（balanced モード）
+
+<img src="docs/images/example_architecture.png" width="600" alt="プラットフォームアーキテクチャの図解例">
 
 ## スタイルモード
 
 学術論文風からグラレコ風まで、3段階のスタイルを切り替え可能:
+
+<img src="docs/images/style_modes.png" width="600" alt="3つのスタイルモードの比較">
 
 | モード | コンセプト | 主な用途 |
 |--------|-----------|---------|
@@ -86,6 +96,8 @@ claude
 Claude がテキストを分析し、最適な図種（パイプライン、比較図、アーキテクチャ図など）を判断。詳細な視覚記述を生成した上で、Gemini Imagen に渡して画像化する。
 
 ## 仕組み
+
+<img src="docs/images/pipeline.png" width="600" alt="パイプラインの仕組み: Retriever → Planner → Stylist → Visualizer → Critic">
 
 1. **Retriever** — 図種・トピックの類似度で `data/reference_sets/` から参照例を選定
 2. **Planner** — 入力テキストから図の詳細な視覚記述（レイアウト、コンポーネント、アイコン、色）を生成
