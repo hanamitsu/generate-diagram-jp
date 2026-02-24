@@ -1,79 +1,81 @@
 # generate-diagram-jp
 
-Claude Code skill for generating Japanese-language diagrams from text input, powered by Gemini Imagen.
+テキストから日本語図解を自動生成する Claude Code スキル。画像生成には Gemini Imagen を使用。
 
-Built on the [PaperBanana](https://github.com/llmsresearch/paperbanana) methodology — a multi-stage pipeline (Retriever → Planner → Stylist → Visualizer → Critic) where Claude handles all reasoning stages and Gemini Imagen generates the final image.
+[PaperBanana](https://github.com/llmsresearch/paperbanana) の手法をベースに、Claude が Retriever → Planner → Stylist → Critic の全推論工程を担当し、Gemini Imagen が最終画像を生成するマルチステージパイプライン。
 
-## Examples
+[English version](README_EN.md)
 
-| Input | Style | Output |
-|-------|-------|--------|
-| AI agent pipeline description | balanced | Hand-drawn graphic recording style with colorful soft-tone boxes |
-| Healthcare AI strategy comparison | balanced | Side-by-side comparison with ribbon banners and marker highlights |
-| 3D character generation pipeline | balanced | Left-to-right pipeline with phase groupings |
+## 生成例
 
-## Style Modes
+| 入力テーマ | スタイル | 出力イメージ |
+|-----------|---------|-------------|
+| AIエージェントパイプラインの説明 | balanced | グラレコ風の手描きタッチ、カラフルなソフトトーンのボックス |
+| ヘルスケアAI戦略の比較 | balanced | 左右対称の比較図、リボンバナーとマーカーハイライト |
+| 3Dキャラクター生成パイプライン | balanced | 左→右パイプライン、フェーズグルーピング |
 
-Three modes on a spectrum from academic to graphic recording:
+## スタイルモード
 
-| Mode | Concept | Use Case |
-|------|---------|----------|
-| `academic` | Minimal Structure, Friendly Icons | Paper submissions, conferences |
-| `balanced` (default) | Structured Graphic Note | Tech blogs, presentations, explainer articles |
-| `graphic-note` | Visual Graphic Recording | Social media, internal docs, concept overviews |
+学術論文風からグラレコ風まで、3段階のスタイルを切り替え可能:
 
-All modes share the same spatial composition rules (grid alignment, flow direction, whitespace hierarchy). They differ in color usage, line treatment, decoration, and icon style.
+| モード | コンセプト | 主な用途 |
+|--------|-----------|---------|
+| `academic` | Minimal Structure, Friendly Icons | 論文投稿・学会発表 |
+| `balanced`（デフォルト） | Structured Graphic Note | 技術ブログ・プレゼン・解説記事 |
+| `graphic-note` | Visual Graphic Recording | SNS共有・社内資料・概念説明 |
 
-## Setup
+全モード共通の空間構成ルール（グリッド整列、フロー方向統一、ホワイトスペース階層）の上に、モードごとに色使い・線のタッチ・装飾・アイコンスタイルが変わる。
 
-### Prerequisites
+## セットアップ
+
+### 必要なもの
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
 - Python 3.10+
-- Gemini API key ([get one here](https://aistudio.google.com/apikey))
+- Gemini API キー（[こちらで取得](https://aistudio.google.com/apikey)）
 
-### Installation
+### インストール
 
-1. Clone this repository:
+1. リポジトリをクローン:
 
 ```bash
 git clone https://github.com/hanamitsu/generate-diagram-jp.git
 cd generate-diagram-jp
 ```
 
-2. Install Python dependencies:
+2. Python依存パッケージをインストール:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Set up your API key:
+3. APIキーを設定:
 
 ```bash
 cp .env.example .env
-# Edit .env and add your GEMINI_API_KEY
+# .env を編集して GEMINI_API_KEY を記入
 ```
 
-4. Open the project in Claude Code:
+4. Claude Code でプロジェクトを開く:
 
 ```bash
 claude
 ```
 
-## Usage
+## 使い方
 
 ```
 /generate-diagram-jp input.txt "図のキャプション"
 /generate-diagram-jp input.txt "図のキャプション" --style graphic-note
 ```
 
-- First argument: path to a text file describing the content to visualize
-- Second argument: caption for the diagram (optional — Claude will ask if omitted)
-- `--style`: `academic` / `balanced` (default) / `graphic-note`
+- 第1引数: 図解したい内容を記述したテキストファイルのパス
+- 第2引数: 図のキャプション（省略時は Claude が質問する）
+- `--style`: `academic` / `balanced`（デフォルト） / `graphic-note`
 
-### Input Format
+### 入力ファイルの書き方
 
-The input text file should describe a concept, system, or process in plain Japanese or English. For example:
+テキストファイルに、図解したいコンセプト・システム・プロセスを日本語または英語で記述する:
 
 ```
 このシステムは3層アーキテクチャを採用する。
@@ -81,34 +83,34 @@ The input text file should describe a concept, system, or process in plain Japan
 第3層はデータベースである。各層間はAPIで通信する。
 ```
 
-Claude will analyze the text, determine the best diagram type (pipeline, comparison, architecture, etc.), and generate a detailed visual description before passing it to Gemini Imagen for image generation.
+Claude がテキストを分析し、最適な図種（パイプライン、比較図、アーキテクチャ図など）を判断。詳細な視覚記述を生成した上で、Gemini Imagen に渡して画像化する。
 
-## How It Works
+## 仕組み
 
-1. **Retriever** — Selects reference examples from `data/reference_sets/` based on diagram type and topic similarity
-2. **Planner** — Generates a detailed visual description (layout, components, icons, colors) from the input text
-3. **Stylist** — Refines the description against the style guide for the chosen mode
-4. **Visualizer** — Sends the description to Gemini Imagen via `gemini_generate.py`
-5. **Critic** — Evaluates the generated image for faithfulness and readability; may trigger one re-generation
+1. **Retriever** — 図種・トピックの類似度で `data/reference_sets/` から参照例を選定
+2. **Planner** — 入力テキストから図の詳細な視覚記述（レイアウト、コンポーネント、アイコン、色）を生成
+3. **Stylist** — 選択モードのスタイルガイドに基づいて記述を精錬
+4. **Visualizer** — `gemini_generate.py` 経由で Gemini Imagen に送信し画像生成
+5. **Critic** — 生成画像を忠実性・読みやすさで評価。必要に応じて1回再生成
 
-## Project Structure
+## プロジェクト構成
 
 ```
 .claude/skills/generate-diagram-jp/
-  SKILL.md              # Pipeline definition (the skill itself)
-  style-guide.md        # Style rules for all three modes (Japanese)
+  SKILL.md              # パイプライン定義（スキル本体）
+  style-guide.md        # 3モードのスタイルルール
   scripts/
-    gemini_generate.py  # Gemini Imagen API wrapper
+    gemini_generate.py  # Gemini Imagen APIラッパー
 data/
   guidelines/
-    methodology_style_guide.md  # Style rules (English)
+    methodology_style_guide.md  # スタイルルール（英語版）
   reference_sets/
-    index.json          # Reference example metadata
-    images/             # Reference diagram images (~1.2MB total)
+    index.json          # 参照例メタデータ
+    images/             # 参照図画像（合計 約1.2MB）
 ```
 
-## License
+## ライセンス
 
-MIT License — see [LICENSE](LICENSE).
+MIT License — [LICENSE](LICENSE) を参照。
 
-This project is built on [PaperBanana](https://github.com/llmsresearch/paperbanana) (MIT License, Copyright (c) 2025 PaperBanana Contributors).
+本プロジェクトは [PaperBanana](https://github.com/llmsresearch/paperbanana)（MIT License, Copyright (c) 2025 PaperBanana Contributors）をベースに構築。
