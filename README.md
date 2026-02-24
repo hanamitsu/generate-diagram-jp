@@ -1,5 +1,11 @@
 # generate-diagram-jp
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-blueviolet)](https://docs.anthropic.com/en/docs/claude-code)
+[![Gemini Imagen](https://img.shields.io/badge/Gemini_Imagen-Image_Gen-blue)](https://aistudio.google.com/)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-green)](https://www.python.org/)
+[![Based on PaperBanana](https://img.shields.io/badge/Based_on-PaperBanana-orange)](https://github.com/llmsresearch/paperbanana)
+
 テキストから日本語図解を自動生成する Claude Code スキル。画像生成には Gemini Imagen を使用。
 
 [PaperBanana](https://github.com/llmsresearch/paperbanana) の手法をベースに、Claude が Retriever → Planner → Stylist → Critic の全推論工程を担当し、Gemini Imagen が最終画像を生成するマルチステージパイプライン。
