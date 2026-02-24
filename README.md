@@ -28,27 +28,39 @@
 
 <img src="docs/images/example_architecture.png" width="600" alt="プラットフォームアーキテクチャの図解例">
 
+> その他の作例は [Gallery](docs/GALLERY.md) を参照。
+
 ## スタイルモード
 
-学術論文風からグラレコ風まで、同じ入力テキストから3段階のスタイルで生成可能:
+学術論文風からグラレコ風まで、3段階のスタイルを `--style` で切り替え可能。同じ「モード概要」の図をそれぞれのスタイルで描くとこうなる:
 
-### `academic` — 学術論文風
+<table>
+<tr>
+<td align="center"><strong><code>academic</code></strong><br>学術論文風</td>
+<td align="center"><strong><code>balanced</code></strong>（デフォルト）<br>グラレコ＋構造</td>
+<td align="center"><strong><code>graphic-note</code></strong><br>グラレコ風</td>
+</tr>
+<tr>
+<td><img src="docs/images/modes_overview_academic.png" width="280" alt="モード概要（academic）"></td>
+<td><img src="docs/images/modes_overview_balanced.png" width="280" alt="モード概要（balanced）"></td>
+<td><img src="docs/images/modes_overview_graphic_note.png" width="280" alt="モード概要（graphic-note）"></td>
+</tr>
+</table>
 
-<img src="docs/images/mode_academic.png" width="600" alt="academicモードの図解例">
+同じ入力テキストから各モードで生成した実物比較:
 
-> モノクロ構造にパステルアイコンのみ。論文投稿・学会発表向け。
-
-### `balanced`（デフォルト） — グラレコ＋構造
-
-<img src="docs/images/mode_balanced.png" width="600" alt="balancedモードの図解例">
-
-> カラフルなソフトトーン＋手描きタッチ＋リボンバナー・マーカーハイライト。技術ブログ・プレゼン・解説記事向け。
-
-### `graphic-note` — グラレコ風
-
-<img src="docs/images/mode_graphic_note.png" width="600" alt="graphic-noteモードの図解例">
-
-> 手描き感を強めた視覚的リッチな表現。SNS共有・社内資料・概念説明向け。
+<table>
+<tr>
+<td align="center"><code>academic</code></td>
+<td align="center"><code>balanced</code></td>
+<td align="center"><code>graphic-note</code></td>
+</tr>
+<tr>
+<td><img src="docs/images/mode_academic.png" width="280" alt="Coworkパイプライン（academic）"></td>
+<td><img src="docs/images/mode_balanced.png" width="280" alt="Coworkパイプライン（balanced）"></td>
+<td><img src="docs/images/mode_graphic_note.png" width="280" alt="Coworkパイプライン（graphic-note）"></td>
+</tr>
+</table>
 
 全モード共通の空間構成ルール（グリッド整列、フロー方向統一、ホワイトスペース階層）の上に、モードごとに色使い・線のタッチ・装飾・アイコンスタイルが変わる。
 
