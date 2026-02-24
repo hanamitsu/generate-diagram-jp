@@ -1,5 +1,7 @@
 # Anthropic vs ペンタゴン ― AI安全と国家安全保障の正面衝突
 
+> 引用元: [@t_nihonmatsu](https://x.com/t_nihonmatsu/status/2026062211635098005)
+
 ## 何が起きているか
 
 米国防総省（ペンタゴン）が、AI企業Anthropic（Claudeの開発元）に対し「軍事利用の安全制限を全部外せ」と強く要求している問題。
